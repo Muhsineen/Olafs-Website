@@ -1,0 +1,6 @@
+This favicon was generated using the following font:
+
+- Font Title: Delicious Handrawn
+- Font Author: Copyright 2022 The Delicious Handrawn Project Authors (https://github.com/alphArtype/Delicious-Handrawn)
+- Font Source: http://fonts.gstatic.com/s/delicioushandrawn/v3/wlpsgx_NAUNkpmKQifcxkQchDFo3fJ113JpDd6u3AQ.ttf
+- Font License: SIL Open Font License, 1.1 (http://scripts.sil.org/OFL))
