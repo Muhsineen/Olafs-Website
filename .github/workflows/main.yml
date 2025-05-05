@@ -1,0 +1,56 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    name: Build App
+    runs-on: ubuntu-latest
+
+    outputs:
+      artifact-name: ${{ steps.upload.outputs.artifact-name }}
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+
+    - name: Install dependencies and build
+      run: |
+        npm install
+        npm run build
+
+    - name: Upload build artifact
+      id: upload
+      uses: actions/upload-artifact@v4
+      with:
+        name: app-build
+        path: dist/
+
+  deploy:
+    name: Deploy to Self-Hosted Server
+    needs: build
+    runs-on: [self-hosted]
+
+    steps:
+    - name: Download artifact
+      uses: actions/download-artifact@v4
+      with:
+        name: app-build
+        path: /tmp/app-build
+
+    - name: Move files to deployment directory
+      run: |
+        rm -rf /var/www/myapp/*
+        cp -r /tmp/app-build/* /var/www/myapp/
+
+    - name: Restart service
+      run: |
+        sudo systemctl restart myapp
